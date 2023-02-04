@@ -12,5 +12,11 @@ functions:
       - httpApi:
           path: /hello
           method: get
+  dynamodb_access:
+    handler: handler.dynamodb_access
+    events:
+      - httpApi:
+          path: /dynamodb_access
+          method: get
 plugins:
   - serverless-offline
