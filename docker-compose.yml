@@ -1,0 +1,21 @@
+version: "3"
+services:
+  serverless:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/var/task
+      - gem_data:/usr/local/bundle
+    env_file:
+      - docker.env
+    tty: true
+    ports:
+      - 3000:3000
+    entrypoint:
+      - sh
+    command:
+      - -c
+      - sls offline --host 0.0.0.0
+volumes:
+  gem_data:
