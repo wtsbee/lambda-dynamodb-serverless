@@ -17,6 +17,8 @@ services:
     command:
       - -c
       - bundle install && sls offline --host 0.0.0.0
+    depends_on:
+      - dynamodb-local
   dynamodb-local:
     image: amazon/dynamodb-local:latest
     container_name: dynamodb_local
@@ -46,6 +48,17 @@ services:
       AWS_ACCESS_KEY_ID: dummy
       AWS_SECRET_ACCESS_KEY: dummy
       DYNAMODB_REGION: ap-northeast-1
+    depends_on:
+      - dynamodb-local
+  front:
+    build: ./front
+    stdin_open: true
+    tty: true
+    command: npm run dev
+    volumes:
+      - ./front:/app
+    ports:
+      - 5173:5173
     depends_on:
       - dynamodb-local
 volumes:
