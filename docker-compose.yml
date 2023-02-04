@@ -35,5 +35,18 @@ services:
       - 8001:8001
     depends_on:
       - dynamodb-local
+  awscli:
+    image: "amazon/aws-cli"
+    entrypoint:
+      - sh
+    tty: true
+    volumes:
+      - ./dynamodb_shell:/aws
+    environment:
+      AWS_ACCESS_KEY_ID: dummy
+      AWS_SECRET_ACCESS_KEY: dummy
+      DYNAMODB_REGION: ap-northeast-1
+    depends_on:
+      - dynamodb-local
 volumes:
   gem_data:
